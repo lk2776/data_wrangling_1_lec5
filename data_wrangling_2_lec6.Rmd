@@ -19,7 +19,7 @@ head(litters_df)
 
 ```
 
-### select, select helper functions, rename
+### select, select helper functions, rename, relocate
 ```{r}
 #specify names of columns to keep 
 select(litters_df, 
