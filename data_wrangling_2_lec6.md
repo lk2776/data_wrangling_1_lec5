@@ -57,7 +57,7 @@ head(litters_df)
     ## 6 Con7  #2/2/95/3-2         NA          NA            20               6
     ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
 
-### select, select helper functions, rename
+### select, select helper functions, rename, relocate
 
 ``` r
 #specify names of columns to keep 
@@ -277,4 +277,123 @@ select(pups_df,
     ## 3 #1/2/95/2         1       5
     ## # ℹ 310 more rows
 
-## filter
+## filter rows using logical expressions using filter()
+
+comparison operators: \>, \>=, \<, \<=, ==, != presence or absence of
+values: %in% find missing values: is.na() logical operators: &, \|, !
+
+``` r
+#drop all rows with missing values
+drop_na(litters_df)
+```
+
+    ## # A tibble: 31 × 8
+    ##   group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##   <chr> <chr>              <dbl>       <dbl>       <dbl>           <dbl>
+    ## 1 Con7  #85                 19.7        34.7          20               3
+    ## 2 Con7  #1/2/95/2           27          42            19               8
+    ## 3 Con7  #5/5/3/83/3-3       26          41.4          19               6
+    ## # ℹ 28 more rows
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+``` r
+#drop rows for which wt_increase is missing
+
+drop_na(litters_df, 
+        gd0_weight)
+```
+
+    ## # A tibble: 34 × 8
+    ##   group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##   <chr> <chr>              <dbl>       <dbl>       <dbl>           <dbl>
+    ## 1 Con7  #85                 19.7        34.7          20               3
+    ## 2 Con7  #1/2/95/2           27          42            19               8
+    ## 3 Con7  #5/5/3/83/3-3       26          41.4          19               6
+    ## # ℹ 31 more rows
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+la:
+
+``` r
+pups_df = read_csv("./data/FAS_pups.csv",
+                      na=c("NA","."))
+```
+
+    ## Rows: 313 Columns: 6
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (1): Litter Number
+    ## dbl (5): Sex, PD ears, PD eyes, PD pivot, PD walk
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
+pups_df = janitor::clean_names(pups_df)
+colnames(pups_df)
+```
+
+    ## [1] "litter_number" "sex"           "pd_ears"       "pd_eyes"      
+    ## [5] "pd_pivot"      "pd_walk"
+
+``` r
+filter(pups_df, 
+       sex==1)
+```
+
+    ## # A tibble: 155 × 6
+    ##   litter_number   sex pd_ears pd_eyes pd_pivot pd_walk
+    ##   <chr>         <dbl>   <dbl>   <dbl>    <dbl>   <dbl>
+    ## 1 #85               1       4      13        7      11
+    ## 2 #85               1       4      13        7      12
+    ## 3 #1/2/95/2         1       5      13        7       9
+    ## # ℹ 152 more rows
+
+``` r
+filter(pups_df, 
+       pd_walk<11, 
+       sex==2)
+```
+
+    ## # A tibble: 127 × 6
+    ##   litter_number   sex pd_ears pd_eyes pd_pivot pd_walk
+    ##   <chr>         <dbl>   <dbl>   <dbl>    <dbl>   <dbl>
+    ## 1 #1/2/95/2         2       4      13        7       9
+    ## 2 #1/2/95/2         2       4      13        7      10
+    ## 3 #1/2/95/2         2       5      13        8      10
+    ## # ℹ 124 more rows
+
+## mutate
+
+change variables create new variales
+
+``` r
+mutate(litters_df, 
+       wt_gain = gd18_weight - gd0_weight, #create new variable 
+       group = str_to_lower(group)) #update variable
+```
+
+    ## # A tibble: 49 × 9
+    ##   group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##   <chr> <chr>              <dbl>       <dbl>       <dbl>           <dbl>
+    ## 1 con7  #85                 19.7        34.7          20               3
+    ## 2 con7  #1/2/95/2           27          42            19               8
+    ## 3 con7  #5/5/3/83/3-3       26          41.4          19               6
+    ## # ℹ 46 more rows
+    ## # ℹ 3 more variables: pups_dead_birth <dbl>, pups_survive <dbl>, wt_gain <dbl>
+
+la:
+
+``` r
+mutate(pups_df, 
+       pd_pivot_new = pd_pivot-7,
+       pd_sum = pd_ears+pd_eyes+pd_pivot+pd_walk)
+```
+
+    ## # A tibble: 313 × 8
+    ##   litter_number   sex pd_ears pd_eyes pd_pivot pd_walk pd_pivot_new pd_sum
+    ##   <chr>         <dbl>   <dbl>   <dbl>    <dbl>   <dbl>        <dbl>  <dbl>
+    ## 1 #85               1       4      13        7      11            0     35
+    ## 2 #85               1       4      13        7      12            0     36
+    ## 3 #1/2/95/2         1       5      13        7       9            0     34
+    ## # ℹ 310 more rows

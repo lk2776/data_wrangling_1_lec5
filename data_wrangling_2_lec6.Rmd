@@ -94,4 +94,56 @@ select(pups_df,
                       
 ```
 
-## filter
+## filter rows using logical expressions using filter()
+comparison operators: >, >=, <, <=, ==, !=
+presence or absence of values: %in%
+find missing values: is.na()
+logical operators: &, |, !
+
+```{r drop_na}
+#drop all rows with missing values
+drop_na(litters_df)
+
+#drop rows for which wt_increase is missing
+
+drop_na(litters_df, 
+        gd0_weight)
+```
+
+la:
+```{r}
+pups_df = read_csv("./data/FAS_pups.csv",
+                      na=c("NA","."))
+
+pups_df = janitor::clean_names(pups_df)
+colnames(pups_df)
+
+filter(pups_df, 
+       sex==1)
+
+filter(pups_df, 
+       pd_walk<11, 
+       sex==2)
+
+```
+
+## mutate
+change variables
+create new variales
+```{r}
+mutate(litters_df, 
+       wt_gain = gd18_weight - gd0_weight, #create new variable 
+       group = str_to_lower(group)) #update variable
+```
+
+la:
+```{r}
+mutate(pups_df, 
+       pd_pivot_new = pd_pivot-7,
+       pd_sum = pd_ears+pd_eyes+pd_pivot+pd_walk)
+```
+
+
+
+
+
