@@ -1,29 +1,48 @@
 ---
 title: "Simple document"
-output: html_document
+output: github_document
 ---
 
-I'm an R Markdown document! 
-
-# Section 1
-
-Here's a **code chunk** that samples from 
-a _normal distribution_:
-
-```{r}
-samp = rnorm(100)
-length(samp)
-```
-
-# Section 2
-
-I can take the mean of the sample, too!
-The mean is `r mean(samp)`.
+## lec 5
 
 ```{r setup}
+#load packages
 library(tidyverse)
 ```
-```{r read data}
+
+## importing data tables
+```{r read data 1 - in class}
 litters_df = read_csv(file = "./data/FAS_litters.csv")
+names(litters_df)
+litters_df = janitor::clean_names(litters_df)
+names(litters_df)
 ```
 
+## la:
+relative path vs absolute path:
+```{r read data 2 }
+pups_df = read_csv(file = "./data/FAS_pups.csv")
+names(pups_df)
+pups_df = janitor::clean_names(pups_df)
+names(pups_df)
+
+```
+
+## looking at data
+
+```{r}
+#print data
+litters_df
+
+#tail data
+tail(litters_df, 5)
+
+#more neat to understand data
+skimr::skim(litters_df)
+
+#view or View function do not work well in .Rmd file
+#use only in console 
+#view(litters_df)
+```
+
+## arguments to read_*
