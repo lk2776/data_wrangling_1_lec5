@@ -114,3 +114,36 @@ head(mlb11_df,10)
 
 ```
 
+read sas/Stata/SPSS
+
+```{r}
+library(haven)
+pulse_df = read_sas("./data/public_pulse_data.sas7bdat")
+head(pulse_df, 5)
+
+```
+
+la:readr vs base_r
+
+```{r la}
+
+pups_df_readr = read_csv("./data/FAS_pups.csv")
+pups_df_readr = janitor::clean_names(pups_df_readr)
+
+pups_df_base = read.csv("./data/FAS_pups.csv")
+pups_df_base = janitor::clean_names(pups_df_base)
+
+#readr is tibble
+head(pups_df_readr)
+head(pups_df_base)
+
+#look the same
+pups_df_readr$sex
+pups_df_base$sex
+
+#view(pups_df_readr)
+#view(pusp_df_base)
+
+                  
+```
+

@@ -369,3 +369,101 @@ head(mlb11_df,10)
     ##  9 Colorado …   735    5544  1429      163   0.258       1201          118    73
     ## 10 Houston A…   615    5598  1442       95   0.258       1164          118    56
     ## # ℹ 3 more variables: new_onbase <dbl>, new_slug <dbl>, new_obs <dbl>
+
+read sas/Stata/SPSS
+
+``` r
+library(haven)
+pulse_df = read_sas("./data/public_pulse_data.sas7bdat")
+head(pulse_df, 5)
+```
+
+    ## # A tibble: 5 × 7
+    ##      ID   age Sex   BDIScore_BL BDIScore_01m BDIScore_06m BDIScore_12m
+    ##   <dbl> <dbl> <chr>       <dbl>        <dbl>        <dbl>        <dbl>
+    ## 1 10003  48.0 male            7            1            2            0
+    ## 2 10015  72.5 male            6           NA           NA           NA
+    ## 3 10022  58.5 male           14            3            8           NA
+    ## 4 10026  72.7 male           20            6           18           16
+    ## 5 10035  60.4 male            4            0            1            2
+
+la:readr vs base_r
+
+``` r
+pups_df_readr = read_csv("./data/FAS_pups.csv")
+```
+
+    ## Rows: 313 Columns: 6
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (2): Litter Number, PD ears
+    ## dbl (4): Sex, PD eyes, PD pivot, PD walk
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
+pups_df_readr = janitor::clean_names(pups_df_readr)
+
+pups_df_base = read.csv("./data/FAS_pups.csv")
+pups_df_base = janitor::clean_names(pups_df_base)
+
+#readr is tibble
+head(pups_df_readr)
+```
+
+    ## # A tibble: 6 × 6
+    ##   litter_number   sex pd_ears pd_eyes pd_pivot pd_walk
+    ##   <chr>         <dbl> <chr>     <dbl>    <dbl>   <dbl>
+    ## 1 #85               1 4            13        7      11
+    ## 2 #85               1 4            13        7      12
+    ## 3 #1/2/95/2         1 5            13        7       9
+    ## 4 #1/2/95/2         1 5            13        8      10
+    ## 5 #5/5/3/83/3-3     1 5            13        8      10
+    ## 6 #5/5/3/83/3-3     1 5            14        6       9
+
+``` r
+head(pups_df_base)
+```
+
+    ##   litter_number sex pd_ears pd_eyes pd_pivot pd_walk
+    ## 1           #85   1       4      13        7      11
+    ## 2           #85   1       4      13        7      12
+    ## 3     #1/2/95/2   1       5      13        7       9
+    ## 4     #1/2/95/2   1       5      13        8      10
+    ## 5 #5/5/3/83/3-3   1       5      13        8      10
+    ## 6 #5/5/3/83/3-3   1       5      14        6       9
+
+``` r
+#look the same
+pups_df_readr$sex
+```
+
+    ##   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    ##  [38] 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2
+    ##  [75] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    ## [112] 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1 1
+    ## [149] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2
+    ## [186] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1
+    ## [223] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1
+    ## [260] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2
+    ## [297] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+``` r
+pups_df_base$sex
+```
+
+    ##   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    ##  [38] 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2
+    ##  [75] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    ## [112] 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1 1
+    ## [149] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2
+    ## [186] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1
+    ## [223] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1
+    ## [260] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2
+    ## [297] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+``` r
+#view(pups_df_readr)
+#view(pusp_df_base)
+```
