@@ -46,3 +46,71 @@ skimr::skim(litters_df)
 ```
 
 ## arguments to read_*
+```{r additional arguments col_names}
+litters_df = read_csv(file = "./data/FAS_litters.csv",
+                      col_names=TRUE)
+head(litters_df)
+```
+
+```{r missing values: empty space, NA, dot}
+litters_df = 
+  read_csv(
+    file = "./data/FAS_litters.csv",
+    na=c(",","NA","")
+  )
+head(litters_df)
+```
+
+# parsing columns
+```{r specs for all columns}
+litters_df = read_csv(file = "./data/FAS_litters.csv",
+           na = c(".","NA",""),
+           col_types=cols(
+             `Litter Number` = col_character(),
+             `GD0 weight` = col_double(),
+             `GD18 weight` = col_double(),
+             `GD of Birth` = col_integer(),
+             `Pups born alive` = col_integer(),
+             `Pups dead @ birth` = col_integer(),
+             `Pups survive` = col_integer()
+           )
+           )
+head(litters_df)
+tail(litters_df)
+```
+
+```{r specs for some columns}
+litters_df = read_csv(file = "./data/FAS_litters.csv",
+           na = c(".","NA",""),
+           col_types=cols(Group=col_factor()))
+head(litters_df)
+           
+```
+
+## la
+```{r}
+pups_df = read_csv("./data/FAS_pups.csv",
+                   na = c(".","NA"),
+                   col_types="fddddd")
+#colnames(pups_df)
+head(pups_df)
+```
+
+## other file formats
+read_delim:
+```{r}
+litters_df = read_delim("./data/FAS_pups.csv",
+                        delim=",")
+head(litters_df)
+```
+
+read excel flies
+```{r read_excel, sheet, n_max}
+library(readxl)
+mlb11_df = read_excel("./data/mlb11.xlsx",
+                      sheet=1,
+                      n_max=20)
+head(mlb11_df,10)
+
+```
+
