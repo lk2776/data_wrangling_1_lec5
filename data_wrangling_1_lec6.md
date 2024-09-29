@@ -1,4 +1,4 @@
-data_wrangling_2_lec6
+data_wrangling_1_lec6
 ================
 2024-09-29
 
