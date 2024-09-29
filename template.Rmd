@@ -5,9 +5,11 @@ output: github_document
 
 ## lec 5
 
-```{r setup}
+```{r setup, warning=FALSE}
 #load packages
 library(tidyverse)
+library(readxl)
+library(haven)
 ```
 
 ## importing data tables
@@ -18,7 +20,7 @@ litters_df = janitor::clean_names(litters_df)
 names(litters_df)
 ```
 
-## la:
+la:
 relative path vs absolute path:
 ```{r read data 2 }
 pups_df = read_csv(file = "./data/FAS_pups.csv")
@@ -87,7 +89,7 @@ head(litters_df)
            
 ```
 
-## la
+la:
 ```{r}
 pups_df = read_csv("./data/FAS_pups.csv",
                    na = c(".","NA"),
@@ -106,7 +108,7 @@ head(litters_df)
 
 read excel flies
 ```{r read_excel, sheet, n_max}
-library(readxl)
+#library(readxl)
 mlb11_df = read_excel("./data/mlb11.xlsx",
                       sheet=1,
                       n_max=20)
@@ -117,7 +119,7 @@ head(mlb11_df,10)
 read sas/Stata/SPSS
 
 ```{r}
-library(haven)
+#library(haven)
 pulse_df = read_sas("./data/public_pulse_data.sas7bdat")
 head(pulse_df, 5)
 
@@ -144,6 +146,12 @@ pups_df_base$sex
 #view(pups_df_readr)
 #view(pusp_df_base)
 
-                  
+```
+
+write:
+```{r write}
+
+write_csv(pups_df_readr, file="test.csv")
+
 ```
 

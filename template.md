@@ -19,6 +19,11 @@ library(tidyverse)
     ## ✖ dplyr::lag()    masks stats::lag()
     ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 
+``` r
+library(readxl)
+library(haven)
+```
+
 ## importing data tables
 
 ``` r
@@ -50,9 +55,7 @@ names(litters_df)
     ## [1] "group"           "litter_number"   "gd0_weight"      "gd18_weight"    
     ## [5] "gd_of_birth"     "pups_born_alive" "pups_dead_birth" "pups_survive"
 
-## la:
-
-relative path vs absolute path:
+la: relative path vs absolute path:
 
 ``` r
 pups_df = read_csv(file = "./data/FAS_pups.csv")
@@ -293,7 +296,7 @@ head(litters_df)
     ## # ℹ 3 more variables: `Pups born alive` <dbl>, `Pups dead @ birth` <dbl>,
     ## #   `Pups survive` <dbl>
 
-## la
+la:
 
 ``` r
 pups_df = read_csv("./data/FAS_pups.csv",
@@ -348,7 +351,7 @@ head(litters_df)
 read excel flies
 
 ``` r
-library(readxl)
+#library(readxl)
 mlb11_df = read_excel("./data/mlb11.xlsx",
                       sheet=1,
                       n_max=20)
@@ -373,7 +376,7 @@ head(mlb11_df,10)
 read sas/Stata/SPSS
 
 ``` r
-library(haven)
+#library(haven)
 pulse_df = read_sas("./data/public_pulse_data.sas7bdat")
 head(pulse_df, 5)
 ```
@@ -466,4 +469,10 @@ pups_df_base$sex
 ``` r
 #view(pups_df_readr)
 #view(pusp_df_base)
+```
+
+write:
+
+``` r
+write_csv(pups_df_readr, file="test.csv")
 ```
