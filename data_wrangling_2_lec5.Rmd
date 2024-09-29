@@ -1,0 +1,60 @@
+---
+title: "data_wrangling_2_lec6"
+output: github_document
+date: "2024-09-29"
+---
+
+### load packages
+```{r setup, warning=FALSE}
+library(tidyverse)
+```
+
+### read data
+```{r}
+options(tibble.print_min = 3)
+litters_df = read_csv("./data/FAS_litters.csv",
+                      na=c("NA","."))
+litters_df = janitor::clean_names(litters_df)
+head(litters_df)
+
+```
+
+### select:
+```{r}
+#specify names of columns to keep 
+select(litters_df, 
+       group, 
+       litter_number,
+       gd0_weight,
+       pups_born_alive)
+
+#specify a range of columns to keep 
+select(litters_df, 
+       group:gd_of_birth)
+
+#specify names of columns to remove
+select(litters_df, 
+       -pups_survive,
+       -gd0_weight)
+
+#rename 'selected' names of columns 
+select(litters_df, 
+       GROUP=group, 
+       LiTter_NuMbEr=litter_number)
+
+#rename only - not 'selecting' 
+rename(litters_df, 
+       GROUP=group, 
+       LiTtER_NuMbEr=litter_number)
+```
+
+#read data
+```{r}
+options(tibble.print_min = 3)
+pups_df = read_csv("./data/FAS_pups.csv",
+                      na=c("NA","."))
+
+pups_df = janitor::clean_names(pups_df)
+                      
+```
+
