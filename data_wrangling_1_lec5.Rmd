@@ -1,9 +1,8 @@
 ---
-title: "Simple document"
+title: "lec5"
 output: github_document
 ---
 
-## lec 5
 
 ```{r setup, warning=FALSE}
 #load packages

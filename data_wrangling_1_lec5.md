@@ -1,7 +1,5 @@
-Simple document
+lec5
 ================
-
-## lec 5
 
 ``` r
 #load packages
