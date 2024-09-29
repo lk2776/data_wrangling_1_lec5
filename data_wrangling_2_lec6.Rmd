@@ -144,6 +144,58 @@ mutate(pups_df,
 ```
 
 
+## arrange
+rearrange columns 
+```{r}
+head(arrange(litters_df, 
+             group, 
+             pups_born_alive),
+     5)
+```
+
+## multi-step data manipulation
+piping: |> is "then" 
+CMD+shift+M shortcut
+output of one function call is used as first argument/input for next function call 
+
+```{r}
+litters_df = read_csv("./data/FAS_litters.csv", 
+na=c("NA",".","")) |>
+janitor::clean_names() |>
+select(-pups_survive) |>
+mutate(
+wt_gain = gd18_weight - gd0_weight, 
+group = str_to_lower(group))|>
+drop_na(wt_gain)
+
+litters_df 
+
+```
+
+placeholder "_": piping output goes to placeholder location
+```{r}
+
+litters_df |> 
+  lm(wt_gain ~ pups_born_alive, data=_) |>
+  broom::tidy()
+```
+
+limitations to pipe:
+- too many sequences
+- multiple inputs and outputs
+
+la:
+```{r}
+pups_df = read_csv("./data/FAS_pups.csv",
+                      na=c("NA",".")) |> 
+  janitor::clean_names() |> 
+  filter(sex==1) |> 
+  select(-pd_ears) |> 
+  mutate(pd_pivot_new = pd_pivot>7)
+
+pups_df
+
+```
 
 
 
